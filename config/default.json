@@ -1,0 +1,5 @@
+{
+    "port":5000,
+    "jwtSecret":"vladelen mern",
+    "mongoUri":"mongodb+srv://azar:qaz123@cluster0.lwbqf.mongodb.net/app?retryWrites=true&w=majority"
+}
