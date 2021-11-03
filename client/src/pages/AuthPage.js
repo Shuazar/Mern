@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useHttp } from "../hooks/http.hook";
+import { useEffect } from "react";
+import { useMessage } from "../hooks/message.hook";
 
 export const AuthPage = () => {
-    const {loading, request, error} = useHttp()
+    const message = useMessage()
+    const {loading, request, error, clearError} = useHttp()
     const [form , setForm] = useState({
        email:'',password:''
     })
 
     useEffect(()=>{
-    },[error])
+      message(error)
+      clearError()
+    },[error, message,  clearError])
     
     const changeHandler = event =>{
         setForm({...form, [event.target.name]: event.target.value })
@@ -16,13 +21,21 @@ export const AuthPage = () => {
  
     const registerHandler = async () =>{
         try{
-            debugger
             const data = await request('/api/auth/register', 'POST', {...form})
             console.log('Data',data)
         }
         catch(e){
         }
     }
+
+    const loginHandler = async () =>{
+      try{
+          const data = await request('/api/auth/login', 'POST', {...form})
+          console.log('Data',data)
+      }
+      catch(e){
+      }
+  }
   return (
     <div className="row">
       <div className="col s6 offset-s3">
@@ -65,6 +78,7 @@ export const AuthPage = () => {
               className="btn yellow darken-4" 
               style={{marginRight: 10}}
               disabled={loading}
+              onClick={loginHandler}
               >
                   Enter
                   </button>

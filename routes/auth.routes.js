@@ -15,7 +15,6 @@ router.post(
     ],
     async(req,res)=>{
     try{
-        debug
         const errors = validationResult(req)
         if(!errors.isEmpty())
         {
@@ -24,7 +23,8 @@ router.post(
               message:'Invalid registration form'
          })
         }
-        const {email, password}=req.body
+        const {email, password} = req.body
+
         const candidate = await User.findOne({email})
         if(candidate){
            return res.status(400).json({message:'User exist...'})
@@ -59,6 +59,7 @@ router.post(
          })
         }
         const{email,password} = req.body
+        
         const user = await User.findOne({email})
         if(!user){
             return res.status(400).json({message: 'User is not found'})
